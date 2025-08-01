@@ -1,81 +1,60 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
-import { fetchAdvancedUserSearch } from '../services/githubService';
 
-const Search = () => {
+function Search() {
   const [username, setUsername] = useState('');
-  const [location, setLocation] = useState('');
-  const [minRepos, setMinRepos] = useState('');
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  const fetchUserData = async () => {
     try {
-      const results = await fetchAdvancedUserSearch(username, location, minRepos);
-      setUsers(results);
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      if (!response.ok) {
+        throw new Error('User not found');
+      }
+      const data = await response.json();
+      setUserData(data);
+      setError(null);
     } catch (err) {
-      setError("Looks like we cant find the user");
-    } finally {
-      setLoading(false);
+      setError(err.message);
+      setUserData(null);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (username.trim()) {
+      fetchUserData();
     }
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <form onSubmit={handleSearch} className="space-y-4">
+    <div className="p-4 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           type="text"
-          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          placeholder="Enter GitHub username"
+          className="p-2 border rounded"
         />
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Minimum Repositories"
-          value={minRepos}
-          onChange={(e) => setMinRepos(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-        >
+        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
           Search
         </button>
       </form>
 
-      {loading && <p className="mt-4">Loading...</p>}
-      {error && <p className="mt-4 text-red-500">{error}</p>}
+      {error && <p className="text-red-500 mt-4">{error}</p>}
 
-      <div className="mt-6">
-        {users.map((user) => (
-          <div
-            key={user.id}
-            className="border p-4 mb-4 rounded shadow-sm flex items-center space-x-4"
-          >
-            <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
-            <div>
-              <p className="text-lg font-semibold">{user.login}</p>
-              <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                View Profile
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
+      {userData && (
+        <div className="mt-6 bg-gray-100 p-4 rounded shadow">
+          <img src={userData.avatar_url} alt="avatar" className="w-24 h-24 rounded-full mx-auto" />
+          <h2 className="text-center text-xl mt-2">{userData.name || userData.login}</h2>
+          <p className="text-center text-gray-600">{userData.bio}</p>
+          <p className="text-center text-gray-600">Public Repos: {userData.public_repos}</p>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default Search;
