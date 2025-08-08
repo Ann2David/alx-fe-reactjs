@@ -13,10 +13,7 @@ function UserProfile() {
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="
-          rounded-full
-          w-24 h-24 md:w-36 md:h-36
-          mx-auto
+        className="w-16 h-16 sm:w-24 sm:h-24 rounded-full object-cover
         "
       />
       <h1
