@@ -1,16 +1,15 @@
-// src/components/UserCard.jsx
-function UserCard() {
+// src/components/UserProfile.jsx
+function UserProfile() {
   return (
     <div
       className="
-        bg-white
+        bg-gray-100
         p-4 sm:p-4 md:p-8
-        max-w-xs md:max-w-md
+        max-w-xs md:max-w-sm
         mx-auto my-20
         rounded-lg shadow-lg
       "
     >
-      {/* Profile Section */}
       <img
         src="https://via.placeholder.com/150"
         alt="User"
@@ -33,29 +32,13 @@ function UserCard() {
         className="
           text-sm md:text-base
           text-gray-600
-          text-center mb-6
+          text-center
         "
       >
         Developer at Example Co. Loves to write code and explore new technologies.
       </p>
-
-      {/* Extra Card Section */}
-      <div
-        className="
-          bg-gray-100
-          p-4 rounded-lg
-          text-center
-        "
-      >
-        <h2 className="text-lg font-semibold text-gray-800">
-          Latest Project
-        </h2>
-        <p className="text-gray-600 mt-2">
-          Building a modern responsive UI with Tailwind CSS and React.
-        </p>
-      </div>
     </div>
   );
 }
 
-export default UserCard;
+export default UserProfile;
