@@ -1,20 +1,25 @@
 [
   {
     "id": 1,
-    "title": "Spaghetti Carbonara",
-    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "https://via.placeholder.com/300x200"
-  },
-  {
-    "id": 2,
-    "title": "Chicken Tikka Masala",
-    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://via.placeholder.com/300x200"
-  },
-  {
-    "id": 3,
-    "title": "Avocado Toast",
-    "summary": "Simple and delicious avocado spread on toasted bread, topped with spices and veggies.",
-    "image": "https://via.placeholder.com/300x200"
+    "title": "Spaghetti Bolognese",
+    "summary": "A classic Italian pasta dish with rich meat sauce.",
+    "description": "This spaghetti bolognese is hearty, flavorful, and easy to make for weeknight dinners.",
+    "image": "https://source.unsplash.com/800x600/?spaghetti",
+    "ingredients": [
+      "200g spaghetti",
+      "100g minced beef",
+      "1 onion, chopped",
+      "2 garlic cloves, minced",
+      "400g canned tomatoes",
+      "Salt and pepper to taste"
+    ],
+    "instructions": [
+      "Cook spaghetti according to package instructions.",
+      "Sauté onion and garlic until fragrant.",
+      "Add minced beef and cook until browned.",
+      "Pour in canned tomatoes and simmer for 20 minutes.",
+      "Season with salt and pepper.",
+      "Serve sauce over spaghetti."
+    ]
   }
 ]

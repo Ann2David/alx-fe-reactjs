@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    // Load the JSON file
     fetch("/data.json")
       .then((response) => response.json())
       .then((data) => setRecipes(data))
@@ -17,10 +17,10 @@ const HomePage = () => {
         🍴 Recipe Sharing Platform
       </h1>
 
-      {/* ✅ Added grid-cols-1 for mobile */}
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {recipes.map((recipe) => (
-          <div
+          <Link
+            to={`/recipe/${recipe.id}`}
             key={recipe.id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transform hover:scale-105 transition duration-300"
           >
@@ -34,11 +34,11 @@ const HomePage = () => {
                 {recipe.title}
               </h2>
               <p className="text-gray-600 mt-2">{recipe.summary}</p>
-              <button className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+              <span className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 View Recipe
-              </button>
+              </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
