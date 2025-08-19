@@ -7,10 +7,8 @@ const AddRecipeForm = () => {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // validation
+  // ✅ Validation function
+  const validate = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = "Recipe title is required";
     if (!ingredients.trim()) {
@@ -20,12 +18,18 @@ const AddRecipeForm = () => {
     }
     if (!steps.trim()) newErrors.steps = "Preparation steps are required";
 
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validate();
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Here you could send the recipe data to backend or context
+      // Form is valid → add recipe
       const newRecipe = { title, ingredients, steps };
-      console.log("New Recipe Submitted:", newRecipe);
+      console.log("✅ New Recipe Submitted:", newRecipe);
 
       // Reset form
       setTitle("");
