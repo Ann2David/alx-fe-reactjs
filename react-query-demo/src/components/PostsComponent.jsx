@@ -17,8 +17,10 @@ function PostsComponent() {
     isError,
     refetch,
   } = useQuery("posts", fetchPosts, {
-    refetchOnWindowFocus: true,   // 👈 required by checker
-    keepPreviousData: true,       // 👈 required by checker
+    refetchOnWindowFocus: true,  // 👈 already required
+    keepPreviousData: true,      // 👈 already required
+    cacheTime: 1000 * 60 * 5,    // 👈 cache data for 5 minutes
+    staleTime: 1000 * 30,        // 👈 data considered fresh for 30 seconds
   });
 
   if (isLoading) return <p>Loading posts...</p>;
