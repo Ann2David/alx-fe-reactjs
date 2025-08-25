@@ -1,0 +1,7 @@
+import React from "react";
+
+function ProfileDetails() {
+  return <h3>User Profile Details</h3>;
+}
+
+export default ProfileDetails;
