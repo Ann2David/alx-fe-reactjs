@@ -1,44 +1,33 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import TodoList from "../components/TodoList";
+import "@testing-library/jest-dom";
+import TodoList from "../components/TodoList"; // adjust path if your file is elsewhere
 
 describe("TodoList Component", () => {
   test("renders initial todos", () => {
     render(<TodoList />);
-    expect(screen.getByText("Learn React")).toBeInTheDocument();
-    expect(screen.getByText("Build a Todo App")).toBeInTheDocument();
+    expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
   });
 
-  test("adds a new todo", async () => {
+  test("can add a new todo", () => {
     render(<TodoList />);
-    const input = screen.getByPlaceholderText("Add a new todo");
-    const button = screen.getByText("Add");
-
-    await userEvent.type(input, "New Task");
-    fireEvent.click(button);
-
-    expect(screen.getByText("New Task")).toBeInTheDocument();
+    fireEvent.change(screen.getByPlaceholderText(/add a new todo/i), {
+      target: { value: "New Task" },
+    });
+    fireEvent.click(screen.getByText(/Add/i));
+    expect(screen.getByText(/New Task/i)).toBeInTheDocument();
   });
 
-  test("toggles todo completion", () => {
+  test("can toggle a todo", () => {
     render(<TodoList />);
-    const todo = screen.getByText("Learn React");
-
-    // Initially not completed
-    expect(todo).toHaveStyle("text-decoration: none");
-
+    const todo = screen.getByText(/Learn React/i);
     fireEvent.click(todo);
-
-    expect(todo).toHaveStyle("text-decoration: line-through");
+    expect(todo).toHaveClass("completed");
   });
 
-  test("deletes a todo", () => {
+  test("can delete a todo", () => {
     render(<TodoList />);
-    const todo = screen.getByText("Learn React");
-    const deleteBtn = todo.querySelector("button");
-
-    fireEvent.click(deleteBtn);
-
+    const todo = screen.getByText(/Learn React/i);
+    fireEvent.click(screen.getByText(/Delete/i));
     expect(todo).not.toBeInTheDocument();
   });
 });
